@@ -1,0 +1,94 @@
+ADD TO NOTION
+
+TO-DOish
+------------------------------------------
+modify sublime text so that byte appears as a special word
+
+write fancy for loop for screenPrint function.
+
+add "catching" structure that makes it so pot values don't SNAP from one point to another when turned. they will have to pass over the original value before changes can be made. this only applies to pots that are used to control multiple values like the comman pots located on the bottom right of the system.
+
+variable note length function working pretty well except for when the potentiometer value goes from "active" to "inactive" length mode while a note is currently active. this creates a repeat note off message from the note.
+
+breaking out of loops or long ifs is a good idea even if it means a one input of dual input reading might be read on the next loop
+
+think about how to implement polyphony constraint in firmware rather than relying on ableton. a note manager that checks to see if a current value is already being played and retriggers it rather than just playing on top of it. 
+
+detectKeyPress() function doesn't need a delay feature because when the note is played by hand it should represent what is perceived by the current LED output.
+
+PROBLEMS
+------------------------------------------
+While in patch mode, press a node to enter active linking, pressing any modifier, and then releasing the active node will cause the system to freeze. Pressing the active node button again will return it to normal.
+
+Outputs activated by pushbuttons will deactivate when recieving a low signal from the logic of a module. There doesn't seem to be a good way of fixing it that isn't hairy or doesn't create uncertain user interaction when tog and invert are implemented. 
+
+toggle and invert do not work with metroplexer/snake maker. consider adding that method to the structure of the module rather than the structure of the system. the problem is specific to the metroplexer because it references the states of the output nodes (rather than just its inputs like the other modules) in order to create its outputs
+
+
+PATCHING
+------------------------------------------
+error for attempting to connect input to input or output to output
+error msg for nodes that can't be patched when link attempted
+
+
+
+FUTURE IMPLEMENTATION WITH HIGHER LANGUAGE
+------------------------------------------
+retrigger keyboard notes when node has multiple module sources that overlap true
+
+
+
+INEFFICIENCIES
+------------------------------------------
+- factorial checks with orGate() check as more links are added
+	- when we checked this we used the same node. which meant each time it went to check the loop
+	  it only really have to make one check at the top and then it was done. didn't get the full
+	  effect of exponentially checking through the list as it got bigger
+- memory limit on links
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Lookup Tables
+These will work well for the Binaries Squared and Cubed Patterns. Is it worth applying to the others?
+
+Consider making a table for CHANGES rather than states. That way when going through the loop, the program will only write to LEDs that have changed. For instance, if the 3rd digit changes then the loop goes 1, 2, CHANGE, 3, 4, 5, 6, 7, 8. Normally it would assign the value and write it even if the value remained the same. This wouldn’t be too hard to change in the Sheets doc, but it would make the code more inscrutable. It’s for speed, but is speed worth it? We’ll always know the value, but it will be relative. Is there a benefit in knowing the true value of a state?
+
+What would happen if you permutated the sequence though? The changes would no longer apply to the same locations? You would have to move the last state with the permutation. Or maybe it doesn’t matter?
+
+
+Toggle Effect
+If a toggle effect is used on an input or output. The effect will be what the LED conveys not the original signal.
+
+
+Prime Starting and Checking It Has 256 Numbers
+
+
+Knob Resetting
+
+
+INC and DEC Patched, but also in Sequencer Ping-Pong Mode 
+
+Low Priority to have altering direction. Stick with just moving back by one for now.
+
+Bug with RX on Pause clear hold, if you wait a second to see if it’s active. Don’t you also have to wait  a second to make sure it’s deactivated? If you a step activates, and then you check to see if pause is active, then you would have to wait a secon on when it is intended to deactivate because otherwise it would still be active? ::shrug::
+
+
+The big pause
+Every module does it’s thing and we’re ready to go and then there’s a big check across all modules to let them populate signals.
+
+Permutations for Counter
+12345678
+12563478
+13572468
+15263748
+18273645
+14325876
+43218765
+87654321
+
+Mode that says IGNORE EVERYTHING except for this one specific thing. Example being the logic gate selection.
+
+In PATCH display screen. If I pick an output that is connected to an input with other outputs routed to it, show those outputs as well. 
+
+
