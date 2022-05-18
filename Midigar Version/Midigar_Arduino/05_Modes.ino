@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 
 int modeNodes[3] = {90, 91, 92};
-String screenMode[3] = {"PACH", "REVU", "PLAY"};
+String screenMode[3] = {" Patch Mode", " Review Mode", " Play Mode"};
 
 void modeSelect() {
 	for (int i=0; i<3; i++) {

@@ -2,57 +2,28 @@
 //   SCREEN
 //---------------------------------------------------------------
 
+#include <SPI.h>
 #include <Wire.h>
-#include "Adafruit_LEDBackpack.h"
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
-Adafruit_AlphaNum4 screen = Adafruit_AlphaNum4();
+Adafruit_SSD1306 display(128, 64, 17, 19, 18, 15, 16);
 
 void screenInitialize() {
-	screen.begin(0x70);
-	screen.setBrightness(0);
-	screenClear();
-	screen.writeDisplay();
+	display.begin(SSD1306_SWITCHCAPVCC);
+	display.clearDisplay();
+    display.setTextSize(1);             
+  	display.setTextColor(SSD1306_WHITE);        
+  	display.setCursor(0,32);  
+  	display.println(F(" MIDIGAR"));
+  	display.display();
 }
 
-void screenClear() {
-	for (int i = 0; i < 4; i++) {
-		screen.writeDigitAscii(0, ' ');
-  	}
-}
-
-void screenPrint(int val) {
-	String text = String(val);
-	screenPrint(text);
-}
-
-void screenPrint(String text) { 				 // buff[4] doesn't work and i have no clue why
-    char buff[5];
-    text.toCharArray(buff, 5);
-    if (text.length() == 1) {
-	    screen.writeDigitAscii(0, ' ');
-	    screen.writeDigitAscii(1, ' ');
-	    screen.writeDigitAscii(2, ' ');
-	    screen.writeDigitAscii(3, buff[0]);
-  	}
-  	if (text.length() == 2) {
-	    screen.writeDigitAscii(0, ' ');
-	    screen.writeDigitAscii(1, ' ');
-	    screen.writeDigitAscii(2, buff[0]);
-	    screen.writeDigitAscii(3, buff[1]);
- 	}
-  	if (text.length() == 3) {
-	    screen.writeDigitAscii(0, ' ');
-	    screen.writeDigitAscii(1, buff[0]);
-	    screen.writeDigitAscii(2, buff[1]);
-	    screen.writeDigitAscii(3, buff[2]);
-  	}
-  	if (text.length() == 4) {
-	    screen.writeDigitAscii(0, buff[0]);
-	    screen.writeDigitAscii(1, buff[1]);
-	    screen.writeDigitAscii(2, buff[2]);
-	    screen.writeDigitAscii(3, buff[3]);
-  	}
-  screen.writeDisplay();
+void screenPrint(String text) {
+	display.clearDisplay();
+	display.setCursor(0,32);  
+  	display.println(text);
+	display.display();
 }
 
 
@@ -60,8 +31,6 @@ void screenPrint(String text) { 				 // buff[4] doesn't work and i have no clue 
 //   LEDS
 //---------------------------------------------------------------
 
-#include <SPI.h>
-#include <Adafruit_GFX.h>
 #include <Max72xxPanel.h>
 
 byte csPin = 21;
@@ -78,7 +47,6 @@ void ledsInitialize() {
     leds.setRotation(1, 3);
     leds.setRotation(2, 3);
     leds.write();	
-
 }
 
 
