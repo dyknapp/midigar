@@ -1,8 +1,16 @@
 //-----------------------------------------------------------------------------
+//   INITIALIZE
+//-----------------------------------------------------------------------------
+
+void modesInitialize(){
+  nodes[playNode].displayState = 1;
+}
+
+//-----------------------------------------------------------------------------
 //   MODE SELECTION
 //-----------------------------------------------------------------------------
 
-int modeNodes[3] = {90, 91, 92};
+int modeNodes[3] = {patchNode, reviewNode, playNode};
 String screenMode[3] = {" Patch Mode", " Review Mode", " Play Mode"};
 
 void modeSelect() {
@@ -10,8 +18,8 @@ void modeSelect() {
 		if (nodes[modeNodes[i]].physicalRisingEdge()) {
 		    nodes[modeNodes[modeCurrent]].displayState = 0;
 			modeCurrent = i;
-			nodes[modeNodes[i]].displayState = 1;
 			screenPrint(screenMode[i]);
+      nodes[modeNodes[i]].displayState = 1;
 		}
 	}
 }
@@ -27,4 +35,16 @@ void playMode() {
 			nodes[i].displayState = nodes[i].physicalState;
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------
+//   PATCH MODE
+//-----------------------------------------------------------------------------
+
+void patchMode() {
+  for (int i=0; i<totalNodes; i++) {
+    if (nodes[i].type == 1 || nodes[i].type == 3) {
+      nodes[i].displayState = nodes[i].physicalState;
+    }
+  }
 }
